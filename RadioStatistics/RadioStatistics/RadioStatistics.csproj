@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="RadioStatistics.Abstract">
+      <HintPath>..\..\..\3. LinqRadioStatistics-20200727T190054Z-001\3. LinqRadioStatistics\RadioStatistics - Students\RadioStatistics.Abstract.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
