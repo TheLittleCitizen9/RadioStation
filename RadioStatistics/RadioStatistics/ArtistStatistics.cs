@@ -25,7 +25,7 @@ namespace RadioStatistics
 
         public Artist GetArtistWithMostAlbums()
         {
-            throw new NotImplementedException();
+            return _artists.OrderByDescending(artist => artist.Albums.Count()).First();
         }
 
         public IEnumerable<Artist> GetCatchyNamedArtists()
@@ -45,7 +45,7 @@ namespace RadioStatistics
 
         public Artist GetFirstArtistWithTwoAlbums()
         {
-            throw new NotImplementedException();
+            return _artists.Where(artist => artist.Albums.Count() == 2).ToList().First();
         }
 
         public IEnumerable<Artist> GetSlackerArtists()
@@ -55,7 +55,7 @@ namespace RadioStatistics
 
         public IEnumerable<Artist> GetYoungArtists()
         {
-            throw new NotImplementedException();
+            return _artists.Where(artist => artist.Albums.Count() <= 2);
         }
     }
 }
