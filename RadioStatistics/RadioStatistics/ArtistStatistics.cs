@@ -13,10 +13,6 @@ namespace RadioStatistics
         {
             _artists = artists;
         }
-        public IEnumerable<ArtistMetadata> GetArtistsAndAlbumCount()
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<Artist> GetArtistsOrderdByName()
         {
@@ -35,12 +31,12 @@ namespace RadioStatistics
 
         public IEnumerable<Artist> GetDiggingArtists()
         {
-            throw new NotImplementedException();
+            return _artists.Where(a => a.Albums.Where(a => a.Tracks.Where(t => t.Duration > TimeSpan.FromHours(1)).Any()).Any());
         }
 
         public IEnumerable<Artist> GetEligibleForIsraelArtists()
         {
-            throw new NotImplementedException();
+            return _artists.Where(a => a.Albums.Sum(a => a.Tracks.Sum(t => t.Duration.TotalSeconds)) > 7200);
         }
 
         public Artist GetFirstArtistWithTwoAlbums()
@@ -50,12 +46,17 @@ namespace RadioStatistics
 
         public IEnumerable<Artist> GetSlackerArtists()
         {
-            throw new NotImplementedException();
+            return _artists.Where(a => a.Albums.Where(a => a.Tracks.Where(t => t.Duration.TotalSeconds < 60).Count() >= 2).Any());
         }
 
         public IEnumerable<Artist> GetYoungArtists()
         {
             return _artists.Where(artist => artist.Albums.Count() <= 2);
+        }
+
+        IEnumerable<ArtistMetadata> IArtistStatistics.GetArtistsAndAlbumCount()
+        {
+            return _artists.ToList().Select(a => new ArtistMetadata() { AlbumCount = a.Albums.Count(), Name = a.Name });
         }
     }
 }
